@@ -4,6 +4,9 @@
   "description": "Gets data from steam",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "jest",
     "test:cov": "jest --coverage",
@@ -60,7 +63,8 @@
   "release": {
     "branches": [
       "main"
-    ]},
+    ]
+  },
   "files": [
     "dist"
   ]
