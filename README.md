@@ -1,6 +1,6 @@
 # Steam
 
-[![Node.js CI](https://github.com/AndreVarandas/steam/actions/workflows/node.js.yml/badge.svg)](https://github.com/AndreVarandas/steam/actions/workflows/node.js.yml) [![codecov](https://codecov.io/gh/AndreVarandas/steam/branch/main/graph/badge.svg?token=JDDDDK5A04)](https://codecov.io/gh/AndreVarandas/steam)
+[![Node.js CI](https://github.com/AndreVarandas/steam/actions/workflows/node.js.yml/badge.svg)](https://github.com/AndreVarandas/steam/actions/workflows/node.js.yml) [![codecov](https://codecov.io/gh/AndreVarandas/steam/branch/main/graph/badge.svg?token=JDDDDK5A04)](https://codecov.io/gh/AndreVarandas/steam) [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
 Interface to the [Steam Web API](https://steamcommunity.com/dev), fully typed, written in TypeScript. (Wrapper for the Steam Web API)
 
