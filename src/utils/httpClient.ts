@@ -1,5 +1,8 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios'
 
+/**
+ * Singleton class to handle HTTP requests
+ */
 class HttpClient {
   private static instance: HttpClient
   private axiosInstance: AxiosInstance
@@ -15,9 +18,9 @@ class HttpClient {
     return HttpClient.instance
   }
 
-  public async get<T = any>(
+  public async get<T = unknown>(
     url: string,
-    params?: Record<string, any>
+    params?: Record<string, unknown>
   ): Promise<AxiosResponse<T>> {
     return await this.axiosInstance.get<T>(url, { params })
   }

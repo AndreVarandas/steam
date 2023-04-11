@@ -1,4 +1,4 @@
-import { PlayerService } from '../services/steamPlayerService'
+import { SteamPlayerService } from '../services/steamPlayerService'
 import { SteamClient } from '../steamClient'
 import { GetOwnedGamesParams } from '../types/steamPlayer'
 import { ownedGamesMock } from './mocks/ownedGames.mocks'
@@ -7,11 +7,11 @@ jest.mock('../steamClient')
 
 describe('PlayerService', () => {
   let steamClient: SteamClient
-  let playerService: PlayerService
+  let playerService: SteamPlayerService
 
   beforeEach(() => {
     steamClient = new SteamClient('API_KEY')
-    playerService = new PlayerService(steamClient)
+    playerService = new SteamPlayerService(steamClient)
   })
 
   afterEach(() => {
@@ -26,9 +26,9 @@ describe('PlayerService', () => {
 
       const params: GetOwnedGamesParams = {
         steamid: '123456',
-        include_appinfo: true,
-        include_played_free_games: true,
-        appids_filter: [440, 500, 550],
+        includeAppInfo: true,
+        includePlayedFreeGames: true,
+        appIdsFilter: [440, 500, 550],
         format: 'json',
       }
 
@@ -40,7 +40,7 @@ describe('PlayerService', () => {
           steamid: '123456',
           include_appinfo: true,
           include_played_free_games: true,
-          appids_filter: [440, 500, 550],
+          appids_filter: '440,500,550',
           format: 'json',
         }
       )
@@ -51,9 +51,9 @@ describe('PlayerService', () => {
 
       const params: GetOwnedGamesParams = {
         steamid: '123456',
-        include_appinfo: true,
-        include_played_free_games: true,
-        appids_filter: [440, 500, 550],
+        includeAppInfo: true,
+        includePlayedFreeGames: true,
+        appIdsFilter: [440, 500, 550],
         format: 'json',
       }
 
@@ -69,9 +69,9 @@ describe('PlayerService', () => {
 
       const params: GetOwnedGamesParams = {
         steamid: '123456',
-        include_appinfo: true,
-        include_played_free_games: true,
-        appids_filter: [440, 500, 550],
+        includeAppInfo: true,
+        includePlayedFreeGames: true,
+        appIdsFilter: [440, 500, 550],
         format: 'json',
       }
 

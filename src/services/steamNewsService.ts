@@ -25,6 +25,7 @@ export class SteamNewsService {
     params: GetNewsForAppParams
   ): Promise<GetNewsForAppResponse> {
     const { appid, count, maxlength, format = 'json' } = params
+
     return this.steamClient.get<GetNewsForAppResponse>(API_BASE_URL, {
       appid,
       count,

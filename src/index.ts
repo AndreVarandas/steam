@@ -1,4 +1,5 @@
 export { SteamNewsService } from './services/steamNewsService'
 export { SteamUserStatsService } from './services/steamUserStatsService'
 export { SteamUserService } from './services/steamUserService'
+export { SteamPlayerService } from './services/steamPlayerService'
 export { SteamClient } from './steamClient'

@@ -10,13 +10,13 @@ export interface OwnedGame {
 
 export interface GetOwnedGamesParams {
   steamid: string
-  include_appinfo?: boolean
-  include_played_free_games?: boolean
-  appids_filter?: number[]
+  includeAppInfo?: boolean
+  includePlayedFreeGames?: boolean
+  appIdsFilter?: number[]
   format?: 'json' | 'xml' | 'vdf'
 }
 
-export interface OwnedGamesResponse {
+export interface GetOwnedGamesResponse {
   game_count: number
   games: {
     appid: number

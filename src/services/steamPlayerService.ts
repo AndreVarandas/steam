@@ -1,7 +1,13 @@
 import { SteamClient } from '../steamClient'
-import { GetOwnedGamesParams, OwnedGamesResponse } from '../types/steamPlayer'
+import {
+  GetOwnedGamesParams,
+  GetOwnedGamesResponse,
+} from '../types/steamPlayer'
 
-export class PlayerService {
+/**
+ * SteamPlayerService provides access to Steam Player API methods.
+ */
+export class SteamPlayerService {
   constructor(private steamClient: SteamClient) {}
 
   /**
@@ -13,14 +19,28 @@ export class PlayerService {
    *
    * @param params {GetOwnedGamesParams}
    *
-   * @returns {Promise<OwnedGamesResponse>}
+   * @returns {Promise<GetOwnedGamesResponse>}
    */
   async getOwnedGames(
     params: GetOwnedGamesParams
-  ): Promise<OwnedGamesResponse> {
-    return await this.steamClient.get<OwnedGamesResponse>(
+  ): Promise<GetOwnedGamesResponse> {
+    const {
+      steamid,
+      includeAppInfo = true,
+      includePlayedFreeGames = true,
+      appIdsFilter = [],
+      format = 'json',
+    } = params
+
+    return await this.steamClient.get<GetOwnedGamesResponse>(
       'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001',
-      params
+      {
+        steamid,
+        include_appinfo: includeAppInfo,
+        include_played_free_games: includePlayedFreeGames,
+        appids_filter: appIdsFilter.join(','),
+        format,
+      }
     )
   }
 }
