@@ -55,5 +55,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/AndreVarandas/steam.git"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
