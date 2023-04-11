@@ -10,10 +10,10 @@
   "scripts": {
     "test": "jest",
     "test:cov": "jest --coverage",
-    "build": "tsc",
+    "build": "yarn clean && tsc",
     "start": "node dist/index.js",
     "dev": "tsc -w",
-    "clean": "rimraf dist",
+    "clean": "rimraf dist coverage",
     "commit": "git-cz",
     "lint": "eslint --ext .ts src",
     "lint:fix": "eslint --ext .ts src --fix",
