@@ -2,6 +2,7 @@ import { SteamPlayerService } from '../services/steamPlayerService'
 import { SteamClient } from '../steamClient'
 import { GetOwnedGamesParams } from '../types/steamPlayer'
 import { ownedGamesMock } from './mocks/ownedGames.mocks'
+import { recentlyPlayedGamesMock } from './mocks/recentlyPlayedGames.mock'
 
 jest.mock('../steamClient')
 
@@ -35,7 +36,7 @@ describe('PlayerService', () => {
       await playerService.getOwnedGames(params)
 
       expect(getSpy).toHaveBeenCalledWith(
-        'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001',
+        'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/',
         {
           steamid: '123456',
           include_appinfo: true,
@@ -76,6 +77,28 @@ describe('PlayerService', () => {
       }
 
       await expect(playerService.getOwnedGames(params)).rejects.toThrow(error)
+    })
+  })
+
+  describe('getRecentlyPlayedGames', () => {
+    it('should return player recently played games', async () => {
+      const steamid = '123456789'
+      const count = 5
+      const format = 'json'
+
+      steamClient.get = jest.fn().mockResolvedValueOnce(recentlyPlayedGamesMock)
+
+      const result = await playerService.getRecentlyPlayedGames({
+        steamid,
+        count,
+        format,
+      })
+
+      expect(steamClient.get).toHaveBeenCalledWith(
+        'http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/',
+        { steamid, count, format }
+      )
+      expect(result).toEqual(recentlyPlayedGamesMock)
     })
   })
 })

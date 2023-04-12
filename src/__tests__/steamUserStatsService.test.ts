@@ -1,3 +1,5 @@
+import { AxiosError, AxiosResponse } from 'axios'
+
 import { SteamUserStatsService } from '../services/steamUserStatsService'
 import { SteamClient } from '../steamClient'
 import {
@@ -178,7 +180,7 @@ describe('SteamUserStatsService', () => {
     })
 
     it('should throw an error if request fails', async () => {
-      const error = new Error('Request failed')
+      const error = new Error('Failed to get player achievements')
       jest.spyOn(steamClient, 'get').mockRejectedValue(error)
 
       const params: GetPlayerAchievementsParams = {
@@ -190,6 +192,32 @@ describe('SteamUserStatsService', () => {
       await expect(
         steamUserStatsService.getPlayerAchievements(params)
       ).rejects.toThrow(error)
+    })
+
+    it('should throw an error if the player profile is private', async () => {
+      const error = new Error('Request failed') as AxiosError
+
+      error.isAxiosError = true
+      error.response = {
+        status: 403,
+        data: {
+          playerstats: {
+            error: 'Something went wrong',
+          },
+        },
+      } as AxiosResponse
+
+      jest.spyOn(steamClient, 'get').mockRejectedValue(error)
+
+      const params: GetPlayerAchievementsParams = {
+        steamid: '123456',
+        appid: 440,
+        language: 'en',
+      }
+
+      await expect(
+        steamUserStatsService.getPlayerAchievements(params)
+      ).rejects.toThrow('The player profile is not public')
     })
   })
 })

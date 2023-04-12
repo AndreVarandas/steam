@@ -53,5 +53,6 @@ export interface GetPlayerAchievementsResponse {
       name?: string
       description?: string
     }[]
+    error?: string
   }
 }

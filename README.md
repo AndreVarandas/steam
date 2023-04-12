@@ -17,7 +17,7 @@ The Steam Web API is a RESTful web service designed to be called from a web brow
 ## Features / Roadmap
 
 - [x] News
-- [ ] Player
+- [x] Player
 - [x] User
 - [x] User Stats
 
@@ -28,7 +28,7 @@ The Steam Web API is a RESTful web service designed to be called from a web brow
 ### Player
 
 - [x] Get Owned Games
-- [ ] Get Recently Played Games (Not implemented yet)
+- [x] Get Recently Played Games
 
 ### User
 
@@ -152,7 +152,7 @@ const games = await playerService.getOwnedGames({
   includePlayedFreeGames: true,
 })
 
-// Get Recently Played Games (Not implemented yet)
+// Get Recently Played Games
 const games = await playerService.getRecentlyPlayedGames({
   steamid: '76561198000000000',
   count: 3,
@@ -162,10 +162,6 @@ const games = await playerService.getRecentlyPlayedGames({
 ## License
 
 [MIT - 2023 André Varandas](LICENSE)
-
-## Contributing
-
-[Contributing](CONTRIBUTING.md)
 
 ## Disclaimer
 

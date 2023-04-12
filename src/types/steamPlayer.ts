@@ -28,3 +28,21 @@ export interface GetOwnedGamesResponse {
     has_community_visible_stats?: boolean
   }[]
 }
+
+export interface GetRecentlyPlayedGamesParams {
+  steamid: string
+  count?: number
+  format?: string
+}
+
+export interface GetRecentlyPlayedGamesResponse {
+  total_count: number
+  games: {
+    appid: number
+    name: string
+    playtime_2weeks: number
+    playtime_forever: number
+    img_icon_url: string
+    img_logo_url: string
+  }[]
+}

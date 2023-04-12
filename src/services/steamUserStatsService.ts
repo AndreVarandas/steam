@@ -1,3 +1,5 @@
+import { isAxiosError } from 'axios'
+
 import { SteamClient } from '../steamClient'
 import {
   AchievementPercentage,
@@ -81,15 +83,24 @@ export class SteamUserStatsService {
   ): Promise<GetPlayerAchievementsResponse> {
     const { appid, steamid, language } = params
 
-    const response = await this.steamClient.get<GetPlayerAchievementsResponse>(
-      `${API_BASE_URL}/GetPlayerAchievements/v0001`,
-      {
-        appid,
-        steamid,
-        l: language ? language : 'en',
-      }
-    )
+    try {
+      const response =
+        await this.steamClient.get<GetPlayerAchievementsResponse>(
+          `${API_BASE_URL}/GetPlayerAchievements/v0001`,
+          {
+            appid,
+            steamid,
+            l: language ? language : 'en',
+          }
+        )
 
-    return response
+      return response
+    } catch (error) {
+      if (isAxiosError(error) && error.response?.status === 403) {
+        throw new Error('The player profile is not public')
+      }
+
+      throw new Error('Failed to get player achievements')
+    }
   }
 }
