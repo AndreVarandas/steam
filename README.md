@@ -6,13 +6,11 @@ Interface to the [Steam Web API](https://steamcommunity.com/dev), fully typed, w
 
 ![Steam](extra/steam-logo.jpg)
 
-<small>©2023 Valve Corporation. Steam and the Steam logo are trademarks and/or registered trademarks of Valve Corporation in the U.S. and/or other countries.</small>
-
 Valve provides these APIs so website developers can use data from Steam in new and interesting ways. They allow developers to query Steam for information that they can present on their own sites.
 
 The Steam Web API is a RESTful web service designed to be called from a web browser using JavaScript, or from a server using a standard HTTP library.
 
-> I designed this library to make it easy to use the Steam Web API in your projects.
+> I designed this library to make it easy to use the Steam Web API in your projects - Contributions are more than welcome! Feel free to submit your ideas by opening a new issue or creating a Pull Request.
 
 ## Features / Roadmap
 
@@ -166,3 +164,4 @@ const games = await playerService.getRecentlyPlayedGames({
 ## Disclaimer
 
 This project is not affiliated with Valve Corporation or Steam. All trademarks are property of their respective owners in the US and other countries.
+©2023 Valve Corporation. Steam and the Steam logo are trademarks and/or registered trademarks of Valve Corporation in the U.S. and/or other countries.
