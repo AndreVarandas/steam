@@ -51,7 +51,7 @@ yarn add @varandas/steam
 
 ## Usage
 
-Please note that you need to [register](https://steamcommunity.com/dev/registerkey) for a Steam Web API key.
+Please note that you need to [register](https://steamcommunity.com/dev/apikey) for a Steam Web API key.
 
 Also be aware that the Steam Web API only works on a node environment. **Requests made from the browser will fail.**
 
