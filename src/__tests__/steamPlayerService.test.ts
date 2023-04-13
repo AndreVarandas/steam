@@ -1,6 +1,11 @@
+import { AxiosError, AxiosResponse } from 'axios'
+
 import { SteamPlayerService } from '../services/steamPlayerService'
 import { SteamClient } from '../steamClient'
-import { GetOwnedGamesParams } from '../types/steamPlayer'
+import {
+  IGetOwnedGamesParams,
+  IGetRecentlyPlayedGamesParams,
+} from '../types/ISteamPlayer'
 import { ownedGamesMock } from './mocks/ownedGames.mocks'
 import { recentlyPlayedGamesMock } from './mocks/recentlyPlayedGames.mock'
 
@@ -25,7 +30,7 @@ describe('PlayerService', () => {
         .spyOn(steamClient, 'get')
         .mockResolvedValue(ownedGamesMock)
 
-      const params: GetOwnedGamesParams = {
+      const params: IGetOwnedGamesParams = {
         steamid: '123456',
         includeAppInfo: true,
         includePlayedFreeGames: true,
@@ -50,7 +55,7 @@ describe('PlayerService', () => {
     it('should return the response data', async () => {
       jest.spyOn(steamClient, 'get').mockResolvedValue(ownedGamesMock)
 
-      const params: GetOwnedGamesParams = {
+      const params: IGetOwnedGamesParams = {
         steamid: '123456',
         includeAppInfo: true,
         includePlayedFreeGames: true,
@@ -68,7 +73,7 @@ describe('PlayerService', () => {
       const error = new Error('Request failed')
       jest.spyOn(steamClient, 'get').mockRejectedValue(error)
 
-      const params: GetOwnedGamesParams = {
+      const params: IGetOwnedGamesParams = {
         steamid: '123456',
         includeAppInfo: true,
         includePlayedFreeGames: true,
@@ -81,6 +86,26 @@ describe('PlayerService', () => {
   })
 
   describe('getRecentlyPlayedGames', () => {
+    it('should call SteamClient.get with correct arguments', async () => {
+      const getSpy = jest.spyOn(steamClient, 'get')
+
+      const params: IGetRecentlyPlayedGamesParams = {
+        count: 5,
+        steamid: '123456789',
+      }
+
+      await playerService.getRecentlyPlayedGames(params)
+
+      expect(getSpy).toHaveBeenCalledWith(
+        'http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/',
+        {
+          count: 5,
+          format: 'json',
+          steamid: '123456789',
+        }
+      )
+    })
+
     it('should return player recently played games', async () => {
       const steamid = '123456789'
       const count = 5
@@ -99,6 +124,45 @@ describe('PlayerService', () => {
         { steamid, count, format }
       )
       expect(result).toEqual(recentlyPlayedGamesMock)
+    })
+
+    it('should throw an error if request fails', async () => {
+      const error = new Error('Failed to get Recently Played Games')
+      jest.spyOn(steamClient, 'get').mockRejectedValue(error)
+
+      const params: IGetRecentlyPlayedGamesParams = {
+        steamid: '123456789',
+        count: 5,
+      }
+
+      await expect(
+        playerService.getRecentlyPlayedGames(params)
+      ).rejects.toThrow(error)
+    })
+
+    it('should throw and error if the player profile is private', async () => {
+      const error = new Error('Request failed') as AxiosError
+
+      error.isAxiosError = true
+      error.response = {
+        status: 403,
+        data: {
+          playerstats: {
+            error: 'Something went wrong',
+          },
+        },
+      } as AxiosResponse
+
+      jest.spyOn(steamClient, 'get').mockRejectedValue(error)
+
+      const params: IGetRecentlyPlayedGamesParams = {
+        steamid: '123456789',
+        count: 5,
+      }
+
+      await expect(
+        playerService.getRecentlyPlayedGames(params)
+      ).rejects.toThrow('This player profile is private.')
     })
   })
 })

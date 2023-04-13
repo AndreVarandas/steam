@@ -1,4 +1,4 @@
-export interface PlayerSummary {
+export interface IPlayerSummary {
   steamid: string
   communityvisibilitystate: number
   profilestate: number
@@ -22,24 +22,24 @@ export interface PlayerSummary {
   loccityid?: number
 }
 
-export interface GetPlayerSummariesParams {
+export interface IGetPlayerSummariesParams {
   steamids: string[]
   format?: 'json' | 'xml' | 'vdf'
 }
 
-export interface GetPlayerSummariesResponse {
+export interface IGetPlayerSummariesResponse {
   response: {
-    players: PlayerSummary[]
+    players: IPlayerSummary[]
   }
 }
 
-export interface Friend {
+export interface IFriend {
   steamid: string
   relationship: string
   friend_since?: number
 }
 
-export interface GetFriendListParams {
+export interface IGetFriendListParams {
   steamid: string
   relationship?: 'all' | 'friend'
   format?: 'json' | 'xml' | 'vdf'

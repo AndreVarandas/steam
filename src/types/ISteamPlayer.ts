@@ -1,4 +1,4 @@
-export interface OwnedGame {
+export interface IOwnedGame {
   appid: number
   name?: string
   playtime_2weeks?: number
@@ -8,7 +8,7 @@ export interface OwnedGame {
   has_community_visible_stats?: boolean
 }
 
-export interface GetOwnedGamesParams {
+export interface IGetOwnedGamesParams {
   steamid: string
   includeAppInfo?: boolean
   includePlayedFreeGames?: boolean
@@ -16,7 +16,7 @@ export interface GetOwnedGamesParams {
   format?: 'json' | 'xml' | 'vdf'
 }
 
-export interface GetOwnedGamesResponse {
+export interface IGetOwnedGamesResponse {
   game_count: number
   games: {
     appid: number
@@ -29,13 +29,13 @@ export interface GetOwnedGamesResponse {
   }[]
 }
 
-export interface GetRecentlyPlayedGamesParams {
+export interface IGetRecentlyPlayedGamesParams {
   steamid: string
   count?: number
   format?: string
 }
 
-export interface GetRecentlyPlayedGamesResponse {
+export interface IGetRecentlyPlayedGamesResponse {
   total_count: number
   games: {
     appid: number

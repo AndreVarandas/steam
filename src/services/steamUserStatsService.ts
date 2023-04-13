@@ -2,14 +2,14 @@ import { isAxiosError } from 'axios'
 
 import { SteamClient } from '../steamClient'
 import {
-  AchievementPercentage,
-  GetGlobalAchievementPercentagesForAppParams,
-  GetGlobalAchievementPercentagesForAppResponse,
-  GetPlayerAchievementsParams,
-  GetPlayerAchievementsResponse,
-  GetUserStatsForGameParams,
-  GetUserStatsForGameResponse,
-} from '../types/steamUserStats'
+  IAchievementPercentage,
+  IGetGlobalAchievementPercentagesForAppParams,
+  IGetGlobalAchievementPercentagesForAppResponse,
+  IGetPlayerAchievementsParams,
+  IGetPlayerAchievementsResponse,
+  IGetUserStatsForGameParams,
+  IGetUserStatsForGameResponse,
+} from '../types/ISteamUserStats'
 
 const API_BASE_URL = 'http://api.steampowered.com/ISteamUserStats'
 
@@ -26,17 +26,17 @@ export class SteamUserStatsService {
   /**
    * Returns on global achievements overview of a specific game in percentages.
    *
-   * @param params {GetGlobalAchievementPercentagesForAppParams}
+   * @param params {IGetGlobalAchievementPercentagesForAppParams}
    *
-   * @returns {Promise<AchievementPercentage[]>}
+   * @returns {Promise<IAchievementPercentage[]>}
    */
   async getGlobalAchievementPercentagesForApp(
-    params: GetGlobalAchievementPercentagesForAppParams
-  ): Promise<AchievementPercentage[]> {
+    params: IGetGlobalAchievementPercentagesForAppParams
+  ): Promise<IAchievementPercentage[]> {
     const { gameid, format = 'json' } = params
 
     const response =
-      await this.steamClient.get<GetGlobalAchievementPercentagesForAppResponse>(
+      await this.steamClient.get<IGetGlobalAchievementPercentagesForAppResponse>(
         `${API_BASE_URL}/GetGlobalAchievementPercentagesForApp/v0002/`,
         {
           gameid,
@@ -50,16 +50,16 @@ export class SteamUserStatsService {
   /**
    * Returns a list of achievements for this user by app id (v2)
    *
-   * @param params {GetUserStatsForGameParams}
+   * @param params {IGetUserStatsForGameParams}
    *
-   * @returns {Promise<GetUserStatsForGameResponse>}
+   * @returns {Promise<IGetUserStatsForGameResponse>}
    */
   async getUserStatsForGame(
-    params: GetUserStatsForGameParams
-  ): Promise<GetUserStatsForGameResponse> {
+    params: IGetUserStatsForGameParams
+  ): Promise<IGetUserStatsForGameResponse> {
     const { appid, steamid, language } = params
 
-    const response = await this.steamClient.get<GetUserStatsForGameResponse>(
+    const response = await this.steamClient.get<IGetUserStatsForGameResponse>(
       `${API_BASE_URL}/GetUserStatsForGame/v0002`,
       {
         appid,
@@ -74,18 +74,18 @@ export class SteamUserStatsService {
   /**
    * Returns a list of achievements for this user by app id (v1)
    *
-   * @param params {GetPlayerAchievementsParams}
+   * @param params {IGetPlayerAchievementsParams}
    *
-   * @returns {Promise<GetPlayerAchievementsResponse>}
+   * @returns {Promise<IGetPlayerAchievementsResponse>}
    */
   async getPlayerAchievements(
-    params: GetPlayerAchievementsParams
-  ): Promise<GetPlayerAchievementsResponse> {
+    params: IGetPlayerAchievementsParams
+  ): Promise<IGetPlayerAchievementsResponse> {
     const { appid, steamid, language } = params
 
     try {
       const response =
-        await this.steamClient.get<GetPlayerAchievementsResponse>(
+        await this.steamClient.get<IGetPlayerAchievementsResponse>(
           `${API_BASE_URL}/GetPlayerAchievements/v0001`,
           {
             appid,

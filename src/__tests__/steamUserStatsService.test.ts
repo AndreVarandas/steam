@@ -3,10 +3,10 @@ import { AxiosError, AxiosResponse } from 'axios'
 import { SteamUserStatsService } from '../services/steamUserStatsService'
 import { SteamClient } from '../steamClient'
 import {
-  GetGlobalAchievementPercentagesForAppParams,
-  GetPlayerAchievementsParams,
-  GetUserStatsForGameParams,
-} from '../types/steamUserStats'
+  IGetGlobalAchievementPercentagesForAppParams,
+  IGetPlayerAchievementsParams,
+  IGetUserStatsForGameParams,
+} from '../types/ISteamUserStats'
 import { globalAchievementPercentageMock } from './mocks/globalAchievementPercentage.mock'
 import { playerAchievementResponseMock } from './mocks/playerAchievement.mock'
 import { userStatsForGameMock } from './mocks/userStatsForGame.mock'
@@ -32,7 +32,7 @@ describe('SteamUserStatsService', () => {
         .spyOn(steamClient, 'get')
         .mockResolvedValue(globalAchievementPercentageMock)
 
-      const params: GetGlobalAchievementPercentagesForAppParams = {
+      const params: IGetGlobalAchievementPercentagesForAppParams = {
         gameid: 123456,
         format: 'json',
       }
@@ -53,7 +53,7 @@ describe('SteamUserStatsService', () => {
         .spyOn(steamClient, 'get')
         .mockResolvedValue(globalAchievementPercentageMock)
 
-      const params: GetGlobalAchievementPercentagesForAppParams = {
+      const params: IGetGlobalAchievementPercentagesForAppParams = {
         gameid: 123456,
         format: 'json',
       }
@@ -72,7 +72,7 @@ describe('SteamUserStatsService', () => {
       const error = new Error('Request failed')
       jest.spyOn(steamClient, 'get').mockRejectedValue(error)
 
-      const params: GetGlobalAchievementPercentagesForAppParams = {
+      const params: IGetGlobalAchievementPercentagesForAppParams = {
         gameid: 123456,
         format: 'json',
       }
@@ -89,7 +89,7 @@ describe('SteamUserStatsService', () => {
         .spyOn(steamClient, 'get')
         .mockResolvedValue(userStatsForGameMock.data)
 
-      const params: GetUserStatsForGameParams = {
+      const params: IGetUserStatsForGameParams = {
         steamid: '123456',
         appid: 440,
         language: 'en',
@@ -112,7 +112,7 @@ describe('SteamUserStatsService', () => {
         .spyOn(steamClient, 'get')
         .mockResolvedValue(userStatsForGameMock.data)
 
-      const params: GetUserStatsForGameParams = {
+      const params: IGetUserStatsForGameParams = {
         steamid: '123456',
         appid: 440,
         language: 'en',
@@ -127,7 +127,7 @@ describe('SteamUserStatsService', () => {
       const error = new Error('Request failed')
       jest.spyOn(steamClient, 'get').mockRejectedValue(error)
 
-      const params: GetUserStatsForGameParams = {
+      const params: IGetUserStatsForGameParams = {
         steamid: '123456',
         appid: 440,
         language: 'en',
@@ -145,7 +145,7 @@ describe('SteamUserStatsService', () => {
         .spyOn(steamClient, 'get')
         .mockResolvedValue(playerAchievementResponseMock)
 
-      const params: GetPlayerAchievementsParams = {
+      const params: IGetPlayerAchievementsParams = {
         steamid: '123456',
         appid: 440,
         language: 'en',
@@ -168,7 +168,7 @@ describe('SteamUserStatsService', () => {
         .spyOn(steamClient, 'get')
         .mockResolvedValue(playerAchievementResponseMock)
 
-      const params: GetPlayerAchievementsParams = {
+      const params: IGetPlayerAchievementsParams = {
         steamid: '123456',
         appid: 440,
         language: 'en',
@@ -183,7 +183,7 @@ describe('SteamUserStatsService', () => {
       const error = new Error('Failed to get player achievements')
       jest.spyOn(steamClient, 'get').mockRejectedValue(error)
 
-      const params: GetPlayerAchievementsParams = {
+      const params: IGetPlayerAchievementsParams = {
         steamid: '123456',
         appid: 440,
         language: 'en',
@@ -201,7 +201,7 @@ describe('SteamUserStatsService', () => {
       error.response = {
         status: 403,
         data: {
-          playerstats: {
+          response: {
             error: 'Something went wrong',
           },
         },
@@ -209,7 +209,7 @@ describe('SteamUserStatsService', () => {
 
       jest.spyOn(steamClient, 'get').mockRejectedValue(error)
 
-      const params: GetPlayerAchievementsParams = {
+      const params: IGetPlayerAchievementsParams = {
         steamid: '123456',
         appid: 440,
         language: 'en',

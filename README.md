@@ -31,7 +31,7 @@ The Steam Web API is a RESTful web service designed to be called from a web brow
 ### User
 
 - [x] Get PlayerSummaries
-- [x] Get Friend List
+- [x] Get IFriend List
 
 ### User Stats
 
@@ -42,50 +42,54 @@ The Steam Web API is a RESTful web service designed to be called from a web brow
 ## Installation
 
 ```bash
+# With npm
 npm install @varandas/steam
+
+# Or with yarn
+yarn add @varandas/steam
 ```
 
 ## Usage
 
+Please note that you need to [register](https://steamcommunity.com/dev/registerkey) for a Steam Web API key.
+
+Also be aware that the Steam Web API only works on a node environment. **Requests made from the browser will fail.**
+
+**With es6 modules**
+
 ```javascript
-const { SteamClient, SteamNewsService } = require('@varandas/steam')
+import SteamApi, { IGetNewsForAppParams, IGetNewsForAppResponse } from '@varandas/steam'
 
-// Or with ES6 imports
-// import { SteamClient, SteamNewsService } from '@varandas/steam';
+// Create a new client
+const steamApi = new SteamApi("YOUR_STEAM_API_KEY")
 
-// Create a new client, this will be used by all services
-const client = new SteamClient('YOUR_API_KEY')
-// Create a new service, passing the client
-const newsService = new SteamNewsService(client)
+// Get the services as needed
+const newsService = steamApi.getNewsService()
+const playerService = steamApi.getPlayerService()
+const userService = steamApi.getUserService()
+const userStatsService = steamApi.getUserStatsService()
+```
 
-// Wrap the call in an async function, so we can use await on the service call on this example
-// You can also use .then() and .catch() if you prefer
-;(async () => {
-  // Call the service, passing the parameters, all parameters and response are typed
-  const news = await newsService.getNewsForApp({
-    appid: 440,
-    count: 3,
-    maxlength: 300,
-  })
+**Or with commonjs**
 
-  console.log(news)
-})()
+```javascript
+const SteamApi = require('@varandas/steam').default
 ```
 
 ## Documentation
 
-#### SteamClient
+#### SteamApi
 
 ```javascript
-// Create a new client, this will be used by all services
-const client = new SteamClient('YOUR_API_KEY')
+// Main class, use it to create the services. 
+const steamApi = new SteamApi("YOUR_STEAM_API_KEY")
 ```
 
-#### SteamNewsService
+#### News Service
 
 ```javascript
-// Create a new service, passing the client
-const newsService = new SteamNewsService(client)
+// Get the news service from the client
+const newsService = steamApi.getNewsService()
 
 // Get News For App
 const news = await newsService.getNewsForApp({
@@ -95,29 +99,29 @@ const news = await newsService.getNewsForApp({
 })
 ```
 
-#### SteamUserService
+#### User Service
 
 ```javascript
-// Create a new service, passing the client
-const userService = new SteamUserService(client)
+// Get the user service
+const userService = steamApi.getUserService()
 
 // Get Player Summaries
 const users = await userService.getPlayerSummaries({
   steamids: ['76561198000000000', '76561198000000001'],
 })
 
-// Get Friend List
+// Get IFriend List
 const friends = await userService.getFriendList({
   steamid: '76561198000000000',
   relationship: 'all',
 })
 ```
 
-#### SteamUserStatsService
+#### User Stats Service
 
 ```javascript
-// Create a new service, passing the client
-const userStatsService = new SteamUserStatsService(client)
+// Get the user stats service
+const userStatsService = steamApi.getUserStatsService()
 
 // Get Player Achievements
 const achievements = await userStatsService.getPlayerAchievements({
@@ -137,11 +141,11 @@ const stats = await userStatsService.getUserStatsForGame({
 })
 ```
 
-#### SteamPlayerService
+#### Player Service
 
 ```javascript
-// Create a new service, passing the client
-const playerService = new SteamPlayerService(client)
+// Get the player service
+const playerService = steamApi.getPlayerService()
 
 // Get Owned Games
 const games = await playerService.getOwnedGames({

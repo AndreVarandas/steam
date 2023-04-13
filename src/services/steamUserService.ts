@@ -1,11 +1,11 @@
 import { SteamClient } from '../steamClient'
 import {
-  Friend,
-  GetFriendListParams,
-  GetPlayerSummariesParams,
-  GetPlayerSummariesResponse,
-  PlayerSummary,
-} from '../types/steamUser'
+  IFriend,
+  IGetFriendListParams,
+  IGetPlayerSummariesParams,
+  IGetPlayerSummariesResponse,
+  IPlayerSummary,
+} from '../types/ISteamUser'
 
 const API_BASE_URL = 'http://api.steampowered.com/ISteamUser'
 
@@ -22,16 +22,16 @@ export class SteamUserService {
   /**
    * Returns basic profile information for a list of 64-bit Steam IDs.
    *
-   * @param params {GetPlayerSummariesParams}
+   * @param params {IGetPlayerSummariesParams}
    *
-   * @returns {Promise<PlayerSummary[]>}
+   * @returns {Promise<IPlayerSummary[]>}
    */
   async getPlayerSummaries(
-    params: GetPlayerSummariesParams
-  ): Promise<PlayerSummary[]> {
+    params: IGetPlayerSummariesParams
+  ): Promise<IPlayerSummary[]> {
     const { steamids, format = 'json' } = params
 
-    const data = await this.steamClient.get<GetPlayerSummariesResponse>(
+    const data = await this.steamClient.get<IGetPlayerSummariesResponse>(
       `${API_BASE_URL}/GetPlayerSummaries/v0002/`,
       {
         steamids: steamids.join(','),
@@ -46,15 +46,15 @@ export class SteamUserService {
    * Returns the friend list of any Steam user,
    * provided their Steam Community profile visibility is set to "Public". (v1)
    *
-   * @param params {GetFriendListParams}
+   * @param params {IGetFriendListParams}
    *
-   * @returns {Promise<Friend[]>}
+   * @returns {Promise<IFriend[]>}
    */
-  async getFriendList(params: GetFriendListParams): Promise<Friend[]> {
+  async getFriendList(params: IGetFriendListParams): Promise<IFriend[]> {
     const { steamid, relationship = 'all', format = 'json' } = params
 
     const data = await this.steamClient.get<{
-      friendslist: { friends: Friend[] }
+      friendslist: { friends: IFriend[] }
     }>(`${API_BASE_URL}/GetFriendList/v0001/`, {
       steamid,
       relationship,

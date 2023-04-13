@@ -1,9 +1,9 @@
 import { SteamUserService } from '../services/steamUserService'
 import { SteamClient } from '../steamClient'
 import {
-  GetFriendListParams,
-  GetPlayerSummariesParams,
-} from '../types/steamUser'
+  IGetFriendListParams,
+  IGetPlayerSummariesParams,
+} from '../types/ISteamUser'
 import { friendListMock } from './mocks/friendList.mock'
 import { playerSummariesMock } from './mocks/playerSummaries.mock'
 
@@ -28,7 +28,7 @@ describe('SteamUserService', () => {
         .spyOn(steamClient, 'get')
         .mockResolvedValue(playerSummariesMock.data)
 
-      const params: GetPlayerSummariesParams = {
+      const params: IGetPlayerSummariesParams = {
         steamids: ['123', '456'],
         format: 'json',
       }
@@ -47,7 +47,7 @@ describe('SteamUserService', () => {
     it('should return the response data', async () => {
       jest.spyOn(steamClient, 'get').mockResolvedValue(playerSummariesMock.data)
 
-      const params: GetPlayerSummariesParams = {
+      const params: IGetPlayerSummariesParams = {
         steamids: ['123', '456'],
         format: 'json',
       }
@@ -61,7 +61,7 @@ describe('SteamUserService', () => {
       const error = new Error('Request failed')
       jest.spyOn(steamClient, 'get').mockRejectedValue(error)
 
-      const params: GetPlayerSummariesParams = {
+      const params: IGetPlayerSummariesParams = {
         steamids: ['123', '456'],
         format: 'json',
       }
@@ -78,7 +78,7 @@ describe('SteamUserService', () => {
         .spyOn(steamClient, 'get')
         .mockResolvedValue(friendListMock)
 
-      const params: GetFriendListParams = {
+      const params: IGetFriendListParams = {
         steamid: '123456',
         relationship: 'all',
         format: 'json',
@@ -99,7 +99,7 @@ describe('SteamUserService', () => {
     it('should return the response data', async () => {
       jest.spyOn(steamClient, 'get').mockResolvedValue(friendListMock)
 
-      const params: GetFriendListParams = {
+      const params: IGetFriendListParams = {
         steamid: '123456',
         relationship: 'all',
         format: 'json',
@@ -114,7 +114,7 @@ describe('SteamUserService', () => {
       const error = new Error('Request failed')
       jest.spyOn(steamClient, 'get').mockRejectedValue(error)
 
-      const params: GetFriendListParams = {
+      const params: IGetFriendListParams = {
         steamid: '123456',
         relationship: 'all',
         format: 'json',

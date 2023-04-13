@@ -1,4 +1,4 @@
-export interface NewsItem {
+export interface INewsItem {
   gid: string
   title: string
   url: string
@@ -12,14 +12,14 @@ export interface NewsItem {
   appid: number
 }
 
-export interface GetNewsForAppResponse {
+export interface IGetNewsForAppResponse {
   appnews: {
     appid: number
-    newsitems: NewsItem[]
+    newsitems: INewsItem[]
   }
 }
 
-export interface GetNewsForAppParams {
+export interface IGetNewsForAppParams {
   appid: number
   count?: number
   maxlength?: number

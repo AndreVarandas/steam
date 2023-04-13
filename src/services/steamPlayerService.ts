@@ -2,11 +2,11 @@ import { isAxiosError } from 'axios'
 
 import { SteamClient } from '../steamClient'
 import {
-  GetOwnedGamesParams,
-  GetOwnedGamesResponse,
-  GetRecentlyPlayedGamesParams,
-  GetRecentlyPlayedGamesResponse,
-} from '../types/steamPlayer'
+  IGetOwnedGamesParams,
+  IGetOwnedGamesResponse,
+  IGetRecentlyPlayedGamesParams,
+  IGetRecentlyPlayedGamesResponse,
+} from '../types/ISteamPlayer'
 
 /**
  * SteamPlayerService provides access to Steam Player API methods.
@@ -23,13 +23,13 @@ export class SteamPlayerService {
    * you are asking for your own personal details
    * (ie the WebAPI key you are using is linked to the steamid you are requesting).
    *
-   * @param params {GetOwnedGamesParams}
+   * @param params {IGetOwnedGamesParams}
    *
-   * @returns {Promise<GetOwnedGamesResponse>}
+   * @returns {Promise<IGetOwnedGamesResponse>}
    */
   async getOwnedGames(
-    params: GetOwnedGamesParams
-  ): Promise<GetOwnedGamesResponse> {
+    params: IGetOwnedGamesParams
+  ): Promise<IGetOwnedGamesResponse> {
     const {
       steamid,
       includeAppInfo = true,
@@ -38,7 +38,7 @@ export class SteamPlayerService {
       format = 'json',
     } = params
 
-    return await this.steamClient.get<GetOwnedGamesResponse>(
+    return await this.steamClient.get<IGetOwnedGamesResponse>(
       'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/',
       {
         steamid,
@@ -57,18 +57,18 @@ export class SteamPlayerService {
    * you are asking for your own personal details
    * (ie the WebAPI key you are using is linked to the steamid you are requesting).
    *
-   * @param params {GetRecentlyPlayedGamesParams}
+   * @param params {IGetRecentlyPlayedGamesParams}
    *
-   * @returns {Promise<GetRecentlyPlayedGamesResponse>}
+   * @returns {Promise<IGetRecentlyPlayedGamesResponse>}
    */
   async getRecentlyPlayedGames(
-    params: GetRecentlyPlayedGamesParams
-  ): Promise<GetRecentlyPlayedGamesResponse> {
+    params: IGetRecentlyPlayedGamesParams
+  ): Promise<IGetRecentlyPlayedGamesResponse> {
     const { steamid, count = 0, format = 'json' } = params
 
     try {
       const response =
-        await this.steamClient.get<GetRecentlyPlayedGamesResponse>(
+        await this.steamClient.get<IGetRecentlyPlayedGamesResponse>(
           'http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/',
           {
             steamid,
@@ -80,7 +80,7 @@ export class SteamPlayerService {
       return response
     } catch (error) {
       if (isAxiosError(error) && error.response?.status === 403) {
-        throw new Error('The player profile is not public')
+        throw new Error('This player profile is private.')
       }
 
       throw new Error('Failed to get Recently Played Games')

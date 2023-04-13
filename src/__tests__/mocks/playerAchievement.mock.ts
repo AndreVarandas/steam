@@ -1,6 +1,6 @@
-import { GetPlayerAchievementsResponse } from '../../types/steamUserStats'
+import { IGetPlayerAchievementsResponse } from '../../types/ISteamUserStats'
 
-export const playerAchievementResponseMock: GetPlayerAchievementsResponse = {
+export const playerAchievementResponseMock: IGetPlayerAchievementsResponse = {
   playerstats: {
     steamID: '76561197972495328',
     gameName: 'Team Fortress 2',
